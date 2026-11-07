@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Doctor Login</title>
+
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Doctor Login</h1>
+
+</header>
+
+<div class="container">
+
+<form method="POST">
+
+    {% csrf_token %}
+
+   <input type="text"
+   name="username"
+   placeholder="Username">
+
+   <input type="password"
+   name="password"
+   placeholder="Password">
+
+    <button type="submit">
+
+        Login
+
+    </button>
+<div class="container">
+
+<a href="/home/" class="back-btn">
+
+    Back To Home
+
+</a>
+
+<form method="POST">
+</form>
+
+</div>
+
+</body>
+
+</html>

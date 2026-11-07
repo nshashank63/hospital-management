@@ -1,0 +1,166 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Receptionist Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<div class="receptionist-header">
+    <h2>Receptionist Dashboard</h2>
+
+    <div style="margin-top:10px;">
+        <a href="{% url 'index' %}" class="action-btn">Home</a>
+        <a href="{% url 'appointment' %}" class="action-btn">Appointments</a>
+        <a href="{% url 'patient' %}" class="action-btn">Patients</a>
+        <a href="{% url 'doctor' %}" class="action-btn">Doctors</a>
+    </div>
+</div>
+
+<div class="dashboard-wrapper">
+
+    <div class="receptionist-stats">
+
+        <div class="stat-box">
+            <h3>Total Appointments</h3>
+            <p>{{ total_appointments }}</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>Completed</h3>
+            <p>{{ completed_count }}</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>Total Bills</h3>
+            <p>{{ bills|length }}</p>
+        </div>
+
+    </div>
+
+    <div class="section-box">
+
+        <h3>Today's Appointments</h3>
+
+        <table>
+
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for a in appointments %}
+            <tr>
+
+                <td>{{ a.patient.name }}</td>
+                <td>{{ a.doctor.name }}</td>
+
+                <td>
+                    {% if a.status == "Completed" %}
+                        <span style="color:green;font-weight:bold;">Completed</span>
+                    {% else %}
+                        <span style="color:orange;font-weight:bold;">Pending</span>
+                    {% endif %}
+                </td>
+
+                <td>
+
+                    {% if a.status == "Completed" %}
+
+                        <!-- ✅ UPDATED FORM (medicine fee input) -->
+                        <form method="POST" action="{% url 'create_bill' a.id %}">
+                            {% csrf_token %}
+
+                            <input type="number"
+                                   name="medicine_fee"
+                                   placeholder="Medicine Fee"
+                                   value="200"
+                                   required
+                                   style="width:120px;padding:5px;">
+
+                            <button type="submit" class="action-btn">
+                                Generate Bill
+                            </button>
+                        </form>
+
+                    {% else %}
+                        <span class="status-unpaid">Waiting</span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No Appointments Today</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    <div class="section-box">
+
+        <h3>Recent Bills</h3>
+
+        <table>
+
+            <tr>
+                <th>Bill ID</th>
+                <th>Patient</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for b in bills %}
+            <tr>
+
+                <td>#{{ b.id }}</td>
+
+                <td>
+                    {% if b.appointment %}
+                        {{ b.appointment.patient.name }}
+                    {% else %}
+                        {{ b.patient_name }}
+                    {% endif %}
+                </td>
+
+                <td>₹{{ b.total }}</td>
+
+                <td>
+                    {% if b.payment_status == "Paid" %}
+                        <span style="color:green;font-weight:bold;">Paid</span>
+                    {% else %}
+                        <span style="color:red;font-weight:bold;">Unpaid</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a href="{% url 'bill_detail' b.id %}" class="action-btn">
+                        View
+                    </a>
+                </td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No Bills Generated</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

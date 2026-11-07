@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Receptionist Login</title>
+
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Receptionist Login</h1>
+
+</header>
+
+<div class="container">
+
+    {% if error %}
+        <p style="color:red;text-align:center;">
+            {{ error }}
+        </p>
+    {% endif %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input type="text"
+        name="username"
+        placeholder="Username">
+
+        <input type="password"
+        name="password"
+        placeholder="Password">
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

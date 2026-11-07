@@ -1,0 +1,75 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Doctor Information</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h1>Doctor Information</h1>
+</header>
+
+<div class="container">
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="name" placeholder="Doctor Name">
+
+    <!-- FIXED: specialization only -->
+    <select name="specialization" id="specialization" onchange="setFee()">
+
+        <option value="">Select Specialization</option>
+
+        <option value="General Physician">General Physician</option>
+        <option value="Neurologist">Neurologist</option>
+        <option value="Cardiologist">Cardiologist</option>
+        <option value="Orthopedic">Orthopedic</option>
+        <option value="Dermatologist">Dermatologist</option>
+
+    </select>
+
+    <input type="number" name="phone" placeholder="Phone Number">
+
+    <input type="text" name="experience" placeholder="Experience">
+
+    <!-- AUTO FEE -->
+    <input type="text" name="fee" id="fee" readonly placeholder="Consultation Fee">
+
+    <input type="text" name="username" placeholder="Create Username">
+
+    <input type="password" name="password" placeholder="Create Password">
+
+    <button type="submit">Save Doctor</button>
+
+</form>
+
+<a href="/home/" class="back-btn">Back To Home</a>
+
+</div>
+
+<script>
+function setFee() {
+
+    let spec = document.getElementById("specialization").value;
+    let fee = document.getElementById("fee");
+
+    let fees = {
+        "General Physician": 500,
+        "Neurologist": 700,
+        "Cardiologist": 800,
+        "Orthopedic": 600,
+        "Dermatologist": 750
+    };
+
+    fee.value = fees[spec] || "";
+}
+</script>
+
+</body>
+</html>

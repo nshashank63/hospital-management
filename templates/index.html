@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        Hospital Management System
+    </title>
+
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>
+        Smart Hospital Management System
+    </h1>
+
+    <p>
+        Your Health, Our Responsibility
+    </p>
+
+</header>
+
+<div class="main-container">
+
+    <div class="grid">
+
+        <div class="card">
+
+            <h2>Doctor Information</h2>
+
+            <p>
+                View doctor details,
+                specialization and fees.
+            </p>
+
+            <a href="/doctor/"
+            class="btn">
+
+                Doctor Details
+
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Patient Portal</h2>
+
+            <p>
+                Register and manage
+                patient records.
+            </p>
+
+            <a href="/patient/"
+            class="btn">
+
+                Patient Details
+
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Appointments</h2>
+
+            <p>
+                Book appointments
+                with doctors.
+            </p>
+
+            <a href="/appointment/"
+            class="btn">
+
+                Book Appointment
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    © 2026 Smart Hospital Management System
+
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Appointment Booking</title>
+
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Appointment Booking</h1>
+
+</header>
+
+<div class="container">
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- PATIENT DROPDOWN -->
+    <select name="patient_id">
+        {% for p in patients %}
+            <option value="{{ p.id }}">{{ p.name }}</option>
+        {% endfor %}
+    </select>
+
+    <!-- DOCTOR DROPDOWN -->
+    <select name="doctor_id">
+        {% for d in doctors %}
+            <option value="{{ d.id }}">{{ d.name }} ({{ d.specialization }})</option>
+        {% endfor %}
+    </select>
+
+    <input type="text" name="disease" placeholder="Disease">
+
+    <input type="date" name="appointment_date">
+
+    <input type="time" name="appointment_time">
+
+    <button type="submit">Book Appointment</button>
+</form>
+
+<br>
+
+<a href="/home/" class="back-btn">
+
+    Back To Home
+
+</a>
+</div>
+</body>
+</html>

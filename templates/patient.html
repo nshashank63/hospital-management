@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Patient Registration</title>
+
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Patient Registration</h1>
+
+</header>
+
+<div class="container">
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <input type="text"
+    name="name"
+    placeholder="Patient Name">
+
+    <input type="number"
+    name="age"
+    placeholder="Age">
+
+    <input type="text"
+    name="gender"
+    placeholder="Gender">
+
+    <input type="number"
+    name="phone"
+    placeholder="Phone Number">
+
+    <input type="text"
+    name="disease"
+    placeholder="Disease">
+
+    <textarea name="address"
+    placeholder="Address"></textarea>
+
+    <button type="submit">
+
+        Save Patient
+
+    </button>
+    <div class="container">
+
+<a href="/home/" class="back-btn">
+
+    Back To Home
+
+</a>
+
+<form method="POST">
+
+</form>
+
+</div>
+
+</body>
+
+</html>

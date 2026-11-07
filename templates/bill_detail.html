@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patient Invoice</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h1>🏥 Smart Hospital Management System</h1>
+</header>
+
+<div class="bill-container">
+
+    <h2 class="bill-title">Patient Invoice</h2>
+
+    <!-- BILL INFO -->
+    <div class="bill-header">
+
+        <div>
+            <strong>Bill Number:</strong>
+            #{{ bill.id }}
+        </div>
+
+        <div>
+            <strong>Date:</strong>
+            {{ bill.created_at|date:"d-m-Y H:i" }}
+        </div>
+
+    </div>
+
+    <!-- PATIENT INFO -->
+    <p>
+        <strong>Patient Name:</strong> {{ bill.patient_name }}
+    </p>
+
+    <p>
+        <strong>Doctor Name:</strong> Dr. {{ bill.doctor_name }}
+    </p>
+
+    <!-- PAYMENT STATUS + BUTTON -->
+    <p>
+        <strong>Payment Status:</strong>
+
+        {% if bill.payment_status == "Paid" %}
+
+            <span style="color:green;font-weight:bold;">PAID</span>
+
+        {% else %}
+
+            <span style="color:red;font-weight:bold;">UNPAID</span>
+
+            <form method="POST"
+                  action="{% url 'mark_bill_paid' bill.id %}"
+                  style="display:inline-block;margin-left:15px;">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        style="
+                        background:#28a745;
+                        color:white;
+                        border:none;
+                        padding:8px 15px;
+                        border-radius:5px;
+                        cursor:pointer;">
+                    Mark as Paid
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </p>
+
+    <!-- BILL TABLE -->
+    <table class="bill-table">
+
+        <tr>
+            <th>Description</th>
+            <th>Amount (₹)</th>
+        </tr>
+
+        <tr>
+            <td>Doctor Consultation Fee</td>
+            <td>₹{{ bill.doctor_fee }}</td>
+        </tr>
+
+        <tr>
+            <td>Medicine Charges</td>
+            <td>₹{{ bill.medicine_fee }}</td>
+        </tr>
+
+        <tr class="total-row">
+            <td>Total Amount</td>
+            <td>₹{{ bill.total }}</td>
+        </tr>
+
+    </table>
+
+    <!-- ACTION BUTTONS -->
+    <div class="bill-actions">
+
+        <button class="print-btn" onclick="window.print()">
+            Print Bill
+        </button>
+
+        <a href="/receptionist-dashboard/" class="home-btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

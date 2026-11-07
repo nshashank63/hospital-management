@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h1>Dr. {{ doctor_name }} Dashboard</h1>
+</header>
+
+<div class="dashboard-wrapper">
+
+    <!-- STATS CARDS -->
+    <div class="card-container">
+
+        <div class="card-box">
+            <h3>Total Appointments</h3>
+            <p>{{ total_appointments }}</p>
+        </div>
+
+        <div class="card-box">
+            <h3>Total Patients</h3>
+            <p>{{ total_patients }}</p>
+        </div>
+
+        <div class="card-box">
+            <h3>Completed</h3>
+            <p>{{ completed }}</p>
+        </div>
+
+        <div class="card-box">
+            <h3>Pending</h3>
+            <p>{{ pending }}</p>
+        </div>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-box">
+
+        <h3>Today's Appointments</h3>
+
+        <table>
+
+            <tr>
+                <th>Patient</th>
+                <th>Disease</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for i in appointments %}
+
+            <tr>
+
+                <td>{{ i.patient.name }}</td>
+                <td>{{ i.disease }}</td>
+                <td>{{ i.appointment_date }}</td>
+                <td>{{ i.appointment_time }}</td>
+
+                <td>
+                    {% if i.status == "Completed" %}
+                        <span style="color:green;">Completed</span>
+                    {% else %}
+                        <span style="color:orange;">Pending</span>
+                    {% endif %}
+                </td>
+
+                <td>
+
+                    {% if i.status != "Completed" %}
+
+                    <a href="{% url 'complete_appointment' i.id %}" class="btn">
+                        Mark Complete
+                    </a>
+
+                    {% else %}
+
+                    Done
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="6">No Appointments Today</td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+<br>
+
+<a href="/home/" class="back-btn">
+
+    Back To Home
+
+</a>
+</div>
+
+</body>
+</html>
